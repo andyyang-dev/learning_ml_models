@@ -162,31 +162,40 @@ def get_naive_bayes_data(n: int) -> pd.DataFrame:
         data["Girl Type"] += [girl_type] * distribution
     return pd.DataFrame(data)
 
+import random
+import pandas as pd
+
 def get_svm_data(n: int) -> pd.DataFrame:
-    n_low_not_ideal = round(n * 0.25)
+    n_short_not_ideal = round(n * 0.25)
     n_ideal = round(n * 0.4)
-    n_high_not_ideal = round(n * 0.25)
-    n_outliers = n - n_low_not_ideal - n_ideal - n_high_not_ideal
+    n_tall_not_ideal = round(n * 0.25)
+    n_outliers = n - n_short_not_ideal - n_ideal - n_tall_not_ideal
+    
     x_data, y_data = [], []
+
     for _ in range(n_ideal):
-        x_data.append(random.random() * 250 + 320)
+        x_data.append(random.random() * 25 + 150)
         y_data.append("Ideal")
-    for _ in range(n_low_not_ideal):
-        x_data.append(random.random() * 220 + 100)
-        y_data.append("Too flat")
-    for _ in range(n_high_not_ideal):
-        x_data.append(random.random() * 330 + 570)
-        y_data.append("Too big")
+
+    for _ in range(n_short_not_ideal):
+        x_data.append(random.random() * 25 + 120)
+        y_data.append("Too short")
+
+    for _ in range(n_tall_not_ideal):
+        x_data.append(random.random() * 30 + 180)
+        y_data.append("Too tall")
+
     for _ in range(n_outliers):
         if random.random() < 0.5:
-            x_point = random.random() * 30 + 300
+            x_point = random.random() * 10 + 145
             x_data.append(x_point)
-            y_data.append("Ideal" if x_point <= 320 else "Too flat")
+            y_data.append("Ideal" if x_point >= 150 else "Too short")
         else:
-            x_point = random.random() * 50 + 550
+            x_point = random.random() * 15 + 175
             x_data.append(x_point)
-            y_data.append("Ideal" if x_point > 570 else "Too big")
-    return pd.DataFrame({"Breast Volume (ml)": x_data, "Class": y_data})
+            y_data.append("Ideal" if x_point <= 180 else "Too tall")
+
+    return pd.DataFrame({"Height (cm)": x_data, "Class": y_data})
 
 def get_knn_kmeans_data(n: int) -> pd.DataFrame:
     data_x_1 = np.random.rand(n//3) * 0.38 + 0.52
@@ -207,7 +216,7 @@ def get_knn_kmeans_data(n: int) -> pd.DataFrame:
     data_y_3 = (data_y_3 - 0.05) - adjustments * (data_y_3 - 0.08)
 
     careers = []
-    for career in ["Model", "Artist", "OnlyFans"]:
+    for career in ["Model", "Artist", "Flight Attendance"]:
         careers += [career] * (n//3)
 
     df = pd.DataFrame({

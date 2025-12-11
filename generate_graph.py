@@ -13,9 +13,9 @@ def show_linear_data(df: pd.DataFrame, parameter: Tuple[float, float], hide_line
         ax.plot(x_line, y_line)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
-    ax.scatter(df["Attractiveness"], df["Mating Probability"], marker="x")
-    ax.set_title("Mating Possibility in terms of Atrractiveness from Andy's Perspective", pad=20)
-    ax.set_xlabel("Attractiveness")
+    ax.scatter(df["Intelligence"], df["Mating Probability"], marker="x")
+    ax.set_title("Mating Possibility in terms of Intelligence from Sarah's Perspective", pad=20)
+    ax.set_xlabel("Intelligence")
     ax.set_ylabel("Mating Posibility")
     plt.tight_layout()
     plt.show()
@@ -37,11 +37,11 @@ def show_svm_data(df, w: Optional[np.ndarray] = None, b: Optional[float]= None):
     df_not_ideal = df[df["Class"] == -1]
     if w is not None:
         w1, w2 = w
-        x1_line = np.linspace(df_ideal["Normalized Breast Volume (ml)"].min() * 2, df_ideal["Normalized Breast Volume (ml)"].max() * 2, 100)
+        x1_line = np.linspace(df_ideal["Normalized Height (cm)"].min() * 2, df_ideal["Normalized Height (cm)"].max() * 2, 100)
         x2_line = (w1 * x1_line + b) / (-w2)
         ax.plot(x1_line, x2_line)
-    ax.scatter(x=df_ideal["Normalized Breast Volume (ml)"], y=df_ideal["Transformed X"], label="Ideal", marker='o')
-    ax.scatter(x=df_not_ideal["Normalized Breast Volume (ml)"], y=df_not_ideal["Transformed X"], label="Not Ideal", marker='x')
+    ax.scatter(x=df_ideal["Normalized Height (cm)"], y=df_ideal["Transformed X"], label="Ideal", marker='o')
+    ax.scatter(x=df_not_ideal["Normalized Height (cm)"], y=df_not_ideal["Transformed X"], label="Not Ideal", marker='x')
     ax.set_xlabel("x1")
     ax.set_ylabel("x2")
     ax.legend()
